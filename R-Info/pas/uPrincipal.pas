@@ -105,11 +105,12 @@ end;
 
 procedure TfPrincipal.gridInfoDrawCell(Sender: TObject; ACol, ARow: Integer;
   Rect: TRect; State: TGridDrawState);
-
+{
 var str: String;
     rRect: TRect;
+}
 begin
-  {
+  { *** Verificar posteriormente: títulos das colunas
   if ARow = 0 then
   begin
     str := gridInfo.Cells[ACol, ARow];
@@ -162,7 +163,6 @@ var
 begin
   LimparGrid;
 
-  iPosicao := 0;
   sInformacao := memTexto.Text;
   sTexto := EmptyStr;
 
@@ -183,10 +183,7 @@ begin
       Inc(iLinha);
       sTexto := EmptyStr;
     end;
-
   end;
-
-
 end;
 
 end.
