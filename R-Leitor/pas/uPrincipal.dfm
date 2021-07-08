@@ -3,7 +3,7 @@ object fPrincipal: TfPrincipal
   Top = 0
   Caption = 'Leitor de Informa'#231#245'es'
   ClientHeight = 544
-  ClientWidth = 831
+  ClientWidth = 1139
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -45,12 +45,12 @@ object fPrincipal: TfPrincipal
   object edtArquivo: TEdit
     Left = 99
     Top = 8
-    Width = 622
+    Width = 930
     Height = 29
     TabOrder = 0
   end
   object btnBuscar: TButton
-    Left = 727
+    Left = 1035
     Top = 8
     Width = 96
     Height = 29
@@ -75,7 +75,7 @@ object fPrincipal: TfPrincipal
   object gridArquivo: TStringGrid
     Left = 8
     Top = 78
-    Width = 815
+    Width = 1123
     Height = 187
     ColCount = 4
     FixedCols = 0
@@ -99,7 +99,7 @@ object fPrincipal: TfPrincipal
   object gridInfo: TStringGrid
     Left = 8
     Top = 271
-    Width = 815
+    Width = 1123
     Height = 235
     ColCount = 3
     FixedCols = 0
@@ -122,7 +122,7 @@ object fPrincipal: TfPrincipal
   object edtInformacao: TEdit
     Left = 96
     Top = 512
-    Width = 727
+    Width = 1035
     Height = 29
     TabOrder = 6
   end

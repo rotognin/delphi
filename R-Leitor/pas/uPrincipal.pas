@@ -59,6 +59,10 @@ begin
 end;
 
 procedure TfPrincipal.btnSepararClick(Sender: TObject);
+var iLinha, iTamanho, iQtd, iIdx: Integer;
+    tArq: TextFile;
+    sLinha, sDelim: String;
+
 begin
   // Verificar
   if (edtArquivo.Text = EmptyStr) then
@@ -89,6 +93,37 @@ begin
     Exit;
   end;
 
+  sDelim := Copy(edtDelimitador.Text, 1, 1);
+  iLinha := 0;
+
+  AssignFile(tArq, edtArquivo.Text);
+  Reset(tArq);
+
+  while not(EOF(tArq)) do
+  begin
+    ReadLn(tArq, sLinha);
+    Inc(iLinha);
+
+    iTamanho := Length(sLinha);
+    iQtd     := 0;
+
+    for iIdx := 1 to iTamanho do
+      if (sLinha[iIdx] = sDelim) then
+        Inc(iQtd);
+
+    //
+    gridArquivo.RowCount := iQtd + 1;
+    gridArquivo.Cells[0, iLinha] := IntToStr(iLinha);
+    gridArquivo.Cells[1, iLinha] := IntToStr(iTamanho);
+    gridArquivo.Cells[2, iLinha] := IntToStr(iQtd);
+    gridArquivo.Cells[3, iLinha] := sLinha;
+
+
+
+
+  end;
+
+  CloseFile(tArq);
 
 
 
