@@ -24,11 +24,13 @@ type
     procedure btnBuscarClick(Sender: TObject);
     procedure btnSepararClick(Sender: TObject);
     procedure gridArquivoClick(Sender: TObject);
+    procedure gridInfoClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
     procedure LimparGrid;
+    procedure LimparGridArquivo;
     procedure SepararInformacoes(iSeq: Integer; sDelim, sLinha: String);
   end;
 
@@ -67,6 +69,9 @@ var iLinha, iTamanho, iQtd, iIdx: Integer;
     sLinha, sDelim: String;
 
 begin
+  LimparGridArquivo;
+  LimparGrid;
+
   // Verificar
   if (edtArquivo.Text = EmptyStr) then
   begin
@@ -115,7 +120,7 @@ begin
         Inc(iQtd);
 
     // Adicionar as linhas na grid
-    gridArquivo.RowCount := iQtd + 1;
+    gridArquivo.RowCount := iLinha + 1;
     gridArquivo.Cells[0, iLinha] := IntToStr(iLinha);
     gridArquivo.Cells[1, iLinha] := IntToStr(iTamanho);
     gridArquivo.Cells[2, iLinha] := IntToStr(iQtd);
@@ -128,15 +133,11 @@ end;
 procedure TfPrincipal.FormCreate(Sender: TObject);
 begin
   //
-  gridArquivo.Cells[0, 0] := 'Linha';
-  gridArquivo.Cells[1, 0] := 'Tamanho';
-  gridArquivo.Cells[2, 0] := 'Informações';
-  gridArquivo.Cells[3, 0] := 'Texto';
-  gridArquivo.ColWidths[3] := 900;
+  LimparGridArquivo;
+  LimparGrid;
 
-  gridInfo.Cells[0, 0] := 'Posição';
-  gridInfo.Cells[1, 0] := 'Tamanho';
-  GridInfo.Cells[2, 0] := 'Informação';
+  gridArquivo.ColWidths[3] := 900;
+  gridInfo.ColWidths[2] := 700;
 
   // Se vier um arquivo como parâmetro, já setar o mesmo
   if ParamStr(1) <> EmptyStr then
@@ -153,12 +154,14 @@ begin
     else
       edtSequencia.Text := '0';
 
-    if not(FileExists(ParamStr(2))) then
+    if not(FileExists(ParamStr(1))) then
     begin
       ShowMessage('O arquivo informado não existe.');
       edtArquivo.SetFocus;
       Exit;
     end;
+
+    btnSepararClick(Sender);
   end;
 
 end;
@@ -167,6 +170,12 @@ procedure TfPrincipal.gridArquivoClick(Sender: TObject);
 begin
   //
   SepararInformacoes(StrToInt(edtSequencia.Text), edtDelimitador.Text, gridArquivo.Cells[3, gridArquivo.Row]);
+end;
+
+procedure TfPrincipal.gridInfoClick(Sender: TObject);
+begin
+  edtInformacao.Text := EmptyStr;
+  edtInformacao.Text := gridInfo.Cells[2, gridInfo.Row];
 end;
 
 procedure TfPrincipal.LimparGrid;
@@ -179,6 +188,18 @@ begin
   gridInfo.Cells[0,0] := 'Posição';
   gridInfo.Cells[1,0] := 'Tamanho';
   gridInfo.Cells[2,0] := 'Informação';
+end;
+
+procedure TfPrincipal.LimparGridArquivo;
+var iCol: Integer;
+begin
+  for iCol := 0 to gridArquivo.ColCount - 1 do
+    gridArquivo.Cols[iCol].Clear;
+
+  gridArquivo.RowCount   := 1;
+  gridArquivo.Cells[0,0] := 'Posição';
+  gridArquivo.Cells[1,0] := 'Tamanho';
+  gridArquivo.Cells[2,0] := 'Informação';
 end;
 
 procedure TfPrincipal.SepararInformacoes(iSeq: Integer; sDelim, sLinha: String);

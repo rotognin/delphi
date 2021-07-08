@@ -115,6 +115,7 @@ object fPrincipal: TfPrincipal
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 5
+    OnClick = gridInfoClick
     ColWidths = (
       87
       93
