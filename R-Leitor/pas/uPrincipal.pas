@@ -19,7 +19,10 @@ type
     gridInfo: TStringGrid;
     Label4: TLabel;
     edtInformacao: TEdit;
+    btnSeparar: TButton;
     procedure FormCreate(Sender: TObject);
+    procedure btnBuscarClick(Sender: TObject);
+    procedure btnSepararClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,6 +35,65 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfPrincipal.btnBuscarClick(Sender: TObject);
+var sArquivo: String;
+    oDlg: TOpenDialog;
+begin
+  // Buscar o arquivo
+  sArquivo := EmptyStr;
+  oDlg := TOpenDialog.Create(nil);
+
+  try
+    oDlg.InitialDir := GetCurrentDir;
+    oDlg.Filter := 'Arquivos com Delimitadores (*.*)|*.*';
+    if oDlg.Execute then
+      sArquivo := oDlg.FileName;
+
+  finally
+    oDlg.Free;
+  end;
+
+  if (sArquivo <> EmptyStr) then
+    edtArquivo.Text := sArquivo;
+end;
+
+procedure TfPrincipal.btnSepararClick(Sender: TObject);
+begin
+  // Verificar
+  if (edtArquivo.Text = EmptyStr) then
+  begin
+    ShowMessage('Arquivo não informado.');
+    edtArquivo.SetFocus;
+    Exit;
+  end;
+
+  if not(FileExists(edtArquivo.Text)) then
+  begin
+    ShowMessage('O arquivo informado não existe.');
+    edtArquivo.SetFocus;
+    Exit;
+  end;
+
+  if (edtDelimitador.Text = EmptyStr) then
+  begin
+    ShowMessage('Delimitador não informado.');
+    edtDelimitador.SetFocus;
+    Exit;
+  end;
+
+  if (edtSequencia.Text = EmptyStr) then
+  begin
+    ShowMessage('Sequência não informada.' + #13 + 'Informar 0 ou 1');
+    edtSequencia.SetFocus;
+    Exit;
+  end;
+
+
+
+
+
+end;
 
 procedure TfPrincipal.FormCreate(Sender: TObject);
 begin

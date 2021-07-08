@@ -56,6 +56,7 @@ object fPrincipal: TfPrincipal
     Height = 29
     Caption = 'Buscar'
     TabOrder = 1
+    OnClick = btnBuscarClick
   end
   object edtDelimitador: TEdit
     Left = 99
@@ -124,5 +125,14 @@ object fPrincipal: TfPrincipal
     Width = 727
     Height = 29
     TabOrder = 6
+  end
+  object btnSeparar: TButton
+    Left = 295
+    Top = 43
+    Width = 96
+    Height = 29
+    Caption = 'Separar'
+    TabOrder = 7
+    OnClick = btnSepararClick
   end
 end
