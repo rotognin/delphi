@@ -90,6 +90,7 @@ object fPrincipal: TfPrincipal
     ParentFont = False
     ScrollBars = ssVertical
     TabOrder = 4
+    OnClick = gridArquivoClick
     ColWidths = (
       87
       93

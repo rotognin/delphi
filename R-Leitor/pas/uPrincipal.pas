@@ -23,10 +23,13 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
     procedure btnSepararClick(Sender: TObject);
+    procedure gridArquivoClick(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
+    procedure LimparGrid;
+    procedure SepararInformacoes(iSeq: Integer; sDelim, sLinha: String);
   end;
 
 var
@@ -117,17 +120,9 @@ begin
     gridArquivo.Cells[1, iLinha] := IntToStr(iTamanho);
     gridArquivo.Cells[2, iLinha] := IntToStr(iQtd);
     gridArquivo.Cells[3, iLinha] := sLinha;
-
-
-
-
   end;
 
   CloseFile(tArq);
-
-
-
-
 end;
 
 procedure TfPrincipal.FormCreate(Sender: TObject);
@@ -137,6 +132,7 @@ begin
   gridArquivo.Cells[1, 0] := 'Tamanho';
   gridArquivo.Cells[2, 0] := 'Informações';
   gridArquivo.Cells[3, 0] := 'Texto';
+  gridArquivo.ColWidths[3] := 900;
 
   gridInfo.Cells[0, 0] := 'Posição';
   gridInfo.Cells[1, 0] := 'Tamanho';
@@ -165,7 +161,63 @@ begin
     end;
   end;
 
+end;
 
+procedure TfPrincipal.gridArquivoClick(Sender: TObject);
+begin
+  //
+  SepararInformacoes(StrToInt(edtSequencia.Text), edtDelimitador.Text, gridArquivo.Cells[3, gridArquivo.Row]);
+end;
+
+procedure TfPrincipal.LimparGrid;
+var iCol: Integer;
+begin
+  for iCol := 0 to gridInfo.ColCount - 1 do
+    gridInfo.Cols[iCol].Clear;
+
+  gridInfo.RowCount   := 1;
+  gridInfo.Cells[0,0] := 'Posição';
+  gridInfo.Cells[1,0] := 'Tamanho';
+  gridInfo.Cells[2,0] := 'Informação';
+end;
+
+procedure TfPrincipal.SepararInformacoes(iSeq: Integer; sDelim, sLinha: String);
+
+  procedure AddGrid(iLinha, iSeq, iTamanho: Integer; sTexto: String);
+  begin
+    gridInfo.RowCount := iLinha + 1;
+    gridInfo.Cells[0, iLinha] := IntToStr(iSeq);
+    gridInfo.Cells[1, iLinha] := IntToStr(iTamanho);
+    gridInfo.Cells[2, iLinha] := sTexto;
+  end;
+
+var
+  iPosicao, iTamanho, iTotal, iLinha: Integer;
+  sInformacao, sTexto, sChar: String;
+begin
+  LimparGrid;
+
+  sInformacao := sLinha;
+  sTexto := EmptyStr;
+
+  iTotal := Length(sInformacao);
+  iLinha := 1;
+
+  for iPosicao := 1 to iTotal do
+  begin
+    sChar := Copy(sInformacao, iPosicao, 1);
+
+    if sChar <> sDelim then
+      sTexto := sTexto + sChar
+    else
+    begin
+      iTamanho := Length(sTexto);
+      AddGrid(iLinha, iSeq, iTamanho, sTexto);
+      Inc(iSeq);
+      Inc(iLinha);
+      sTexto := EmptyStr;
+    end;
+  end;
 end;
 
 end.
