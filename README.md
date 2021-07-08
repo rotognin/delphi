@@ -35,7 +35,7 @@ O projeto suporta passagem por parâmetros por linha de comando para funcionar d
 Parâmetro | O que é     | Descrição                                                         | Exemplo
 ----------|-------------|-------------------------------------------------------------------|-----------------------------------
 1         | Arquivo     | Um arquivo que tenha linhas e delimitadores                       | C:\Rodrigo\Projetos\Teste\info.csv
-2         | Delimitador | Separador de informações (opcional, ";" padrão)                   | ";" ou "|"
+2         | Delimitador | Separador de informações (opcional, ";" padrão)                   | ";" ou "\|"
 3         | Sequência   | Linha inicial a ser exibida na segunda grade (opcional, padrão 0) | 0 ou 1
 
 Exemplo de chamada pela linha de comando passando parâmetros: 
