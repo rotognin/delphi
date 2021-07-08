@@ -111,7 +111,7 @@ begin
       if (sLinha[iIdx] = sDelim) then
         Inc(iQtd);
 
-    //
+    // Adicionar as linhas na grid
     gridArquivo.RowCount := iQtd + 1;
     gridArquivo.Cells[0, iLinha] := IntToStr(iLinha);
     gridArquivo.Cells[1, iLinha] := IntToStr(iTamanho);
